@@ -1,4 +1,4 @@
-    				/* Q. Simple Questions*/
+    											/* Q. Simple Questions*/
 					
 					
 
@@ -40,36 +40,36 @@ Write a query that returns the person who has spent the most money */
 	limit 1
 	
 	
-							/* Q. Intermediate Questions */	
+											/* Q. Intermediate Questions */	
 							
 							
 
 /* Q1. Write query to return the email, first name, last name, & Genre of all Rock Music listeners. 
    Return your list ordered alphabetically by email starting with A */
   
-   select distinct c.email, c.first_name, c.last_name
-   from customer  c
-   join invoice
-   on invoice.customer_id = c.customer_id
-   join invoice_line
-   on invoice_line.invoice_id = invoice.invoice_id
-   where track_id in (select t.track_id 
+   	select distinct c.email, c.first_name, c.last_name
+   	from customer  c
+	join invoice
+	on invoice.customer_id = c.customer_id
+  	join invoice_line
+   	on invoice_line.invoice_id = invoice.invoice_id
+ 	where track_id in (select t.track_id 
 	   					from track  t
 	   					join genre g
 					  	on g.genre_id = T.genre_id
 	   					where g.name like 'Rock')
-   order by c.email
+	order by c.email
    
 										OR
 										
 	select distinct c.email, c.first_name, c.last_name
-   from customer  c
-   join invoice on invoice.customer_id = c.customer_id
-   join invoice_line on invoice_line.invoice_id = invoice.invoice_id
-   join track on track.track_id = invoice_line.invoice_id
-   join genre on track.genre_id = track.genre_id
-   where genre.name like 'Rock'
-   order by c.email
+   	from customer  c
+   	join invoice on invoice.customer_id = c.customer_id
+   	join invoice_line on invoice_line.invoice_id = invoice.invoice_id
+   	join track on track.track_id = invoice_line.invoice_id
+   	join genre on track.genre_id = track.genre_id
+   	where genre.name like 'Rock'
+   	order by c.email
 										
    
 /* Q2. Let's invite the artists who have written the most rock music in our dataset. 
@@ -117,7 +117,7 @@ Write a query that returns the person who has spent the most money */
 	 
 	 
 	 
-                                                /* Advanced Questions */
+                                                					/* Advanced Questions */
 
 
 /* Q1. Find how much amount spent by each customer on artists? Write a query to return customer name, artist name and total spent */
@@ -166,13 +166,13 @@ the maximum number of purchases is shared return all Genres. */
    Write a query that returns the country along with the top customer and how much they spent. 
    For countries where the top amount spent is shared, provide all customers who spent this amount */
    
-   with top_customer as (
-   select c.country, c.first_name, c.last_name , sum(i.total) as total_spending,
-   row_number () over ( partition by c.country order by sum(i.total) desc) as Row_no
-   from  customer c
-   join invoice i on i.customer_id = c.customer_id
-   group by 1, 2, 3 
-   order by 4 desc, 1 asc
+   	With top_customer as (
+   	select c.country, c.first_name, c.last_name , sum(i.total) as total_spending,
+   	row_number () over ( partition by c.country order by sum(i.total) desc) as Row_no
+   	from  customer c
+   	join invoice i on i.customer_id = c.customer_id
+   	group by 1, 2, 3 
+   	order by 4 desc, 1 asc
 	   )
 	   select *
 	   from top_customer where Row_no =1

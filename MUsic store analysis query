@@ -2,6 +2,8 @@
 
 /* Q. Who is the senior most employee based on job title?  */
 
-select * from employee
-order by levels desc
+Select * From employees
+Order by Level
 limit 1
+
+
